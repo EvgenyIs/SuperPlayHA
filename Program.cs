@@ -22,39 +22,32 @@ namespace SuperPlayHA
                 {
                     webBuilder.Configure(app =>
                     {
-                        // Register exception handling middleware
                         app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-                        // Enable WebSocket support
                         app.UseWebSockets();
 
-                        // Use custom route for testing WebSocket communication
+      
                         app.Use(async (context, next) =>
                         {
                             if (context.Request.Path.StartsWithSegments("/Test") && context.WebSockets.IsWebSocketRequest)
                             {
                                 var webSocketService = context.RequestServices.GetRequiredService<WebSocketService>();
                                 using var ws = await context.WebSockets.AcceptWebSocketAsync();
-                                await webSocketService.HandleConnection(ws);  // Pass the WebSocket connection to the service
+                                await webSocketService.HandleConnection(ws);  
                                 return;
                             }
                             await next();
                         });
-
-                        // You can add more middlewares like routing, authentication, etc.
+ 
                     });
 
-                    // Set URL for the WebSocket server
                     webBuilder.UseUrls("http://localhost:5000");
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    // Register services
-                    //services.AddTransient<ExceptionHandlingMiddleware>(); // Make sure middleware is registered with correct lifetime
-                    services.AddSingleton<WebSocketService>();  // Singleton for WebSocket service
-                    services.AddSingleton<IPlayerService, PlayerService>();  // Singleton for player service
-                    services.AddSingleton<IResourceService, ResourceService>();  // Singleton for resource service
-
+                    services.AddSingleton<WebSocketService>();  
+                    services.AddSingleton<IPlayerService, PlayerService>();  
+                    services.AddSingleton<IResourceService, ResourceService>();  
 
                     services.AddHostedService<WebSocketService>();
                 });
