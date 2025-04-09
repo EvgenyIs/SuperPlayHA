@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SuperPlayHA": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:61359;http://localhost:61360"
+    }
+  }
+}

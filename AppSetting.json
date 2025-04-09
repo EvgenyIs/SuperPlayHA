@@ -1,0 +1,18 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "ServerSettings": {
+    "ServerPort": 8080,
+    "MaxConnections": 1000,
+    "DatabasePath": "game_server.db"
+  },
+  "ResourceLimits": {
+    "MaxCoins": 1000000,
+    "MaxRolls": 100
+  }
+}
